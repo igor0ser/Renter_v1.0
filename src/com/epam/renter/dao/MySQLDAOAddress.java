@@ -30,7 +30,7 @@ public class MySQLDAOAddress implements IDAOAddress {
 				address.setId(resultSet.getInt("idAddress"));
 				address.setStreet(resultSet.getString("street"));
 				address.setHouse(resultSet.getString("house"));
-				address.setAppartment(resultSet.getString("appartment"));
+				address.setApartment(resultSet.getString("appartment"));
 				address.setUser(user);
 			}
 		} catch (SQLException e) {
@@ -47,7 +47,7 @@ public class MySQLDAOAddress implements IDAOAddress {
 					.prepareStatement(CREATE_QUERY);
 			preparedStatement.setString(1, address.getStreet());
 			preparedStatement.setString(2, address.getHouse());
-			preparedStatement.setString(3, address.getAppartment());
+			preparedStatement.setString(3, address.getApartment());
 			preparedStatement.setInt(4, address.getUser().getId());
 			preparedStatement.execute();
 			return true;
