@@ -12,6 +12,7 @@ Used Languages & Technologies:
 -	Tomcat
 -	Log4j2
 
+
 Used Patterns:
 -	MVC
 -	Command
