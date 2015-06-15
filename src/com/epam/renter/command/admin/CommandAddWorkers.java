@@ -34,7 +34,7 @@ public class CommandAddWorkers implements ICommand {
 	private static final String ADMIN_MESSAGE = "message";
 	private final static String LAST_PAGE = "last_page";
 
-	private final Logger logger = LogManager.getLogger(CommandCreatedApps.class
+	private final Logger logger = LogManager.getLogger(CommandAddWorkers.class
 			.getName());
 
 	@Override
@@ -43,8 +43,7 @@ public class CommandAddWorkers implements ICommand {
 		HttpSession session = request.getSession();
 		Application app = (Application) session.getAttribute(APP);
 		SimpleDateFormat formatter = new SimpleDateFormat(FORMAT);
-		String startTime = (String) session.getAttribute(
-				DEFAULT_START);
+		String startTime = (String) session.getAttribute(DEFAULT_START);
 		String endTime = (String) session.getAttribute(DEFAULT_END);
 		Date start = null;
 		Date end = null;
@@ -63,52 +62,55 @@ public class CommandAddWorkers implements ICommand {
 		}
 
 		// getting list of free workers (from previous command)
-		List<Worker> list_worker = (List<Worker>) session.getAttribute(LIST_WORKERS);
+		List<Worker> list_worker = (List<Worker>) session
+				.getAttribute(LIST_WORKERS);
 		System.out.println(list_worker.size());
 		int quantity = 0;
 		for (Worker worker : list_worker) {
 			// looking for checked workers
+			System.out.println(request.getParameter(String.valueOf(worker
+					.getId())));
 			if (request.getParameter(String.valueOf(worker.getId())) != null) {
 				// saving worker in this application work
+				System.out.println("записываем - "
+						+ request.getParameter(String.valueOf(worker.getId())));
 				boolean saved = DAOFactory.mySQLFactory.mySQLDAOWork
 						.create(new Work(app, worker));
+				quantity++;
 				// if errors in saving - logging it
 				if (!saved) {
 					logger.error(String.format(
 							"Work wasn't saved to DB. Worker = %s ", worker));
 				}
-				quantity++;
 			}
-
-			// if admin has chosen 0 workers - error
-			if (quantity == 0) {
-				logger.info("Admin has chosen 0 workers.");
-				forvardMessage(request, response, Message.ADMIN_NULL_WORKERS);
-				return null;
-			}
-
-			// changing application to assigned
-			app.setStart(start);
-			app.setEnd(end);
-			app.setStatus(Status.ASSIGNED);
-			// changing application to assigned in DB
-			boolean isAppSaved = DAOFactory.mySQLFactory.mySQLDAOApplication
-					.update(app);
-
-			// if error - show message about error
-
-			if (!isAppSaved) {
-				logger.error(String.format(
-						"Application wasn't saved to DB. Application = %s ",
-						app));
-				forvardMessage(request, response, Message.ADMIN_DB_ERROR);
-				return null;
-			}
-
-			logger.info(String.format(
-					"Application was assigned. Application = %s", app));
-
 		}
+		// if admin has chosen 0 workers - error
+		if (quantity == 0) {
+			logger.info("Admin has chosen 0 workers.");
+			forvardMessage(request, response, Message.ADMIN_NULL_WORKERS);
+			return null;
+		}
+
+		// changing application to assigned
+		app.setStart(start);
+		app.setEnd(end);
+		app.setStatus(Status.ASSIGNED);
+		// changing application to assigned in DB
+		boolean isAppSaved = DAOFactory.mySQLFactory.mySQLDAOApplication
+				.update(app);
+
+		// if error - show message about error
+
+		if (!isAppSaved) {
+			logger.error(String.format(
+					"Application wasn't saved to DB. Application = %s ", app));
+			forvardMessage(request, response, Message.ADMIN_DB_ERROR);
+			return null;
+		}
+
+		logger.info(String.format("Application was assigned. Application = %s",
+				app));
+
 		forvardMessage(request, response, Message.ADMIN_APP_IS_ASSIGNED);
 		return null;
 	}
