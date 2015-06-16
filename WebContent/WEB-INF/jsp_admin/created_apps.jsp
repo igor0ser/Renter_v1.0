@@ -14,9 +14,6 @@
 <body>
 
 	<%@include file="title-menu.jsp"%>
-
-
-
 	<div class="appplication-container">
 		<table class="app-table" rules="all">
 			<caption>

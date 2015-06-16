@@ -70,7 +70,7 @@ public class CommandFreeWorkers implements ICommand {
 			forvardMessage(request, response, Message.ADMIN_WRONG_TIME);
 			return null;
 		}
-
+		
 		Application app = (Application) session.getAttribute(APP);
 		
 		// all free workers ore free workers of only one specialty

@@ -1,6 +1,7 @@
 package com.epam.renter.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Worker implements Serializable {
@@ -8,10 +9,12 @@ public class Worker implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public Worker() {
+		apps = new ArrayList<Application>();
 	}
 	
 	public Worker(int id) {
 		this.id = id;
+		apps = new ArrayList<Application>();
 	}
 
 	private int id;
