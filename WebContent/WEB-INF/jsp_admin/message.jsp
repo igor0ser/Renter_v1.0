@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <fmt:setLocale value="${language}" />
 <title>Renter - <c:out value="${message}"></c:out></title>
-<link rel="stylesheet" href="main_administrator.css">
+<link rel="stylesheet" href="main_admin.css">
 <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
 </head>
 <body>
