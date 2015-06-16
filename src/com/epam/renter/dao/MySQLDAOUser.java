@@ -15,6 +15,7 @@ public class MySQLDAOUser implements IDAOUser {
 
 	private static String READ_BY_ID_QUERY = "SELECT *  FROM users WHERE idUser=?;";
 	private static String READ_BY_LOGIN_QUERY = "SELECT * FROM users WHERE login=?;";
+	private static String READ_BY_EMAIL_QUERY = "SELECT * FROM users WHERE email=?;";
 	private static String CREATE_QUERY = "INSERT INTO users (login, password, name, surname, email, phoneNumber) VALUES (?,?,?,?,?,?);";
 	private final Logger logger = LogManager.getLogger(MySQLDAOUser.class
 			.getName());
@@ -51,6 +52,31 @@ public class MySQLDAOUser implements IDAOUser {
 			PreparedStatement preparedStatement = conn
 					.prepareStatement(READ_BY_LOGIN_QUERY);
 			preparedStatement.setString(1, login);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				user = new User();
+				user.setId(resultSet.getInt("idUser"));
+				user.setLogin(resultSet.getString("login"));
+				user.setPassword(resultSet.getString("password"));
+				user.setName(resultSet.getString("name"));
+				user.setSurname(resultSet.getString("surname"));
+				user.setEmail(resultSet.getString("email"));
+				user.setPhoneNumber(resultSet.getString("phoneNumber"));
+			}
+		} catch (SQLException e) {
+			logger.error(e);
+		}
+
+		return user;
+	}
+
+	@Override
+	public User findByEmail(String email) {
+		User user = null;
+		try (Connection conn = ConnectionSource.getInstance().getConnection();) {
+			PreparedStatement preparedStatement = conn
+					.prepareStatement(READ_BY_EMAIL_QUERY);
+			preparedStatement.setString(1, email);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
 				user = new User();

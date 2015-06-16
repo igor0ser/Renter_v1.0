@@ -17,7 +17,6 @@ import com.epam.renter.properties.Config;
 public class CommandChangeLanguage implements ICommand {
 	private final static String LANG = "lang";
 	private final static String LANGUAGE = "language";
-	private final static String INDDEX = "index";
 	private final static String LAST_PAGE = "last_page";
 	private final Logger logger = LogManager
 			.getLogger(CommandChangeLanguage.class.getName());
@@ -27,14 +26,12 @@ public class CommandChangeLanguage implements ICommand {
 			HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		String lang = request.getParameter(LANG);
-		// parameter index is only on start page. so this will return us to
-		// start page
-		String index = request.getParameter(INDDEX);
+			
 		session.setAttribute(LANGUAGE, lang);
 
 		// command returns to last url
 		String last_url = (String) session.getAttribute(LAST_PAGE);
-		if ((last_url == null) || (index != null)) {
+		if (last_url == null) {
 			request.getRequestDispatcher(
 					Config.getInstance().getProperty(Config.INDEX)).forward(
 					request, response);

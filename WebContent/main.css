@@ -18,6 +18,7 @@ body {
 	margin-top: -110px;
 }
 
+
 #title-string {
 	font-family: Tetra;
 	font-size: 500%;
@@ -32,10 +33,15 @@ body {
 
 #login-form {
 	display: inline-block;
-	width: 300px;
+	width: 600px;
 	margin-top: -85px;
-	margin-right: 50px;
+	margin-right: 70px;
 	float: right;
+}
+
+.info {
+	width: 200px;
+	padding: 10px;
 }
 
 .center-container {
@@ -215,3 +221,4 @@ select, input {
 	position: relative;
 	padding: 20px;
 }
+

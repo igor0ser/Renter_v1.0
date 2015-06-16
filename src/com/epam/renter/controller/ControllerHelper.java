@@ -17,6 +17,7 @@ import com.epam.renter.command.user.CommandLogIn;
 import com.epam.renter.command.user.CommandLogOut;
 import com.epam.renter.command.user.CommandMyApplications;
 import com.epam.renter.command.user.CommandRegistration;
+import com.epam.renter.command.user.CommandSendPassword;
 
 public class ControllerHelper {
 
@@ -39,6 +40,7 @@ public class ControllerHelper {
 		commands.put("assigned_apps", new CommandAssignedApps());	
 		commands.put("set_app_complete", new CommandSetAppComplete());
 		commands.put("change_language", new CommandChangeLanguage());
+		commands.put("send_pass", new CommandSendPassword());
 	}
 
 	public ICommand getCommand(HttpServletRequest request) {

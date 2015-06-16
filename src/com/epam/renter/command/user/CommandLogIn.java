@@ -34,11 +34,8 @@ public class CommandLogIn implements ICommand {
 		HttpSession session = request.getSession();
 		String login = request.getParameter(LOGIN);
 		String password = request.getParameter(PASSWORD);
-		Locale locale = request.getLocale();
-		Locale.setDefault(locale);
 		User user = DAOFactory.mySQLFactory.mySQLDAOUser.findByLogin(login);
-
-		// login is not found in DB
+	
 		if (user == null) {
 			logger.info(String.format("Wrong login. Login=%s", login));
 			session.setAttribute(ERROR,

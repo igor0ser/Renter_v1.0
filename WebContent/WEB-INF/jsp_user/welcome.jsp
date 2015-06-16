@@ -17,7 +17,7 @@
 </head>
 <body>
 
-<%@include file="title-menu.jsp" %>
+<%@include file="title-menu.jspf" %>
 
 <div class= "center-container animated fadeInUpBig">
 <div id="message-container">

@@ -26,40 +26,7 @@
 
 </head>
 <body>
-	<div class="title-container">
-		<div id="title-string">RENTER</div>
-		<form action="controller" method="post" name="command">
-			<input type="hidden" name="command" value="change_language" /> <input
-				type="hidden" name="index" value="true" />
-			<div id="language">
-				<button name="lang" value="en" type="submit">EN</button>
-				</br>
-				<button name="lang" value="ru" type="submit">RU</button>
-				</br>
-			</div>
-		</form>
-
-		<form id="login-form" action="controller" method="post" name="command">
-			<input type="hidden" name="command" value="login" />
-			<table>
-				<tr>
-					<td><fmt:message key="Login" />:</td>
-					<td class="info"><input type="text" name="login"></td>
-				</tr>
-				<tr>
-					<td><fmt:message key="Password" />:</td>
-					<td class="info"><input type="password" name="password"></td>
-				</tr>
-				<tr>
-					<td colspan="2" align="center"><button type="submit">
-							<fmt:message key="Log_in" />
-						</button></td>
-				</tr>
-			</table>
-		</form>
-
-
-	</div>
+	<%@include file="WEB-INF/jsp_user/title-menu-unlogined.jspf"%>
 
 
 

@@ -2,33 +2,34 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+
+<fmt:setLocale value="${language}" />
+
 <!doctype html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <fmt:setLocale value="${language}" />
-<title>Renter - <fmt:message key="Thank_you" /><c:out value="${sessionScope.login}"></c:out>!</title>
+<title>Renter - <c:out value="${error}">
+		<fmt:message key="Some_errors" />
+	</c:out></title>
 <link rel="stylesheet" href="main.css">
 <link rel="stylesheet" href="animate.css">
 <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-
 </head>
 <body>
 
-	<%@include file="title-menu.jspf"%>
+	<%@include file="WEB-INF/jsp_user/title-menu-unlogined.jspf"%>
 
-
-	<div class="center-container  animated fadeInUpBig">
+	<div class="center-container">
 		<div id="message-container">
-			<b><fmt:message key="Thank_you" /><c:out value="${sessionScope.login}"></c:out>!</b>
-			<b><fmt:message key="We_received" /></b></br> <span></span>
-			<div id="flying_man">
-				<%@include file="flying_man.html"%>
-			</div>
-			<div class = "line_height"><b><fmt:message key="As_soon" /></b></div>
+			<form action="controller" method="post">
+				<input type="hidden" name="command" value="send_pass" /> <b><fmt:message
+						key="Enter_email" /></b> <input type="email" name="email">
+				<button type="Submit">
+					<fmt:message key="Send" />
+				</button>
+			</form>
 		</div>
-	</div>
-
-
 	</div>
 </body>

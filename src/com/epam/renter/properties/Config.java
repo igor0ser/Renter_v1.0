@@ -10,6 +10,7 @@ public class Config {
 	public static final String INDEX = "INDEX";
 	public static final String WELCOME = "WELCOME";
     public static final String ERROR_LOGIN = "ERROR_LOGIN";
+    public static final String WAS_SENT = "WAS_SENT";
     public static final String MY_APPS = "MY_APPS";
     public static final String THANK_YOU = "THANK_YOU";
     public static final String ERROR_DB = "ERROR_DB";
