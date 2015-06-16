@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -21,6 +22,7 @@ public class MySQLDAOApplication implements IDAOApplication {
 	private static String READ_BY_ID_QUERY = "SELECT * FROM applications WHERE idApplication=?;";
 	private static String READ_BY_USER_ID_QUERY = "SELECT * FROM applications WHERE idUser=?;";
 	private static String READ_BY_STATUS_QUERY = "SELECT * FROM applications WHERE status=?;";
+	private static String READ_BY_TIME_QUERY = "SELECT * FROM applications WHERE start <= ? and ? <= end;";
 	private static String CREATE_QUERY = "INSERT INTO applications (idUser, about, status, typeOfWork, creation, desirable, start, end) VALUES (?,?,?,?,?,?,?,?);";
 	private static String UPDATE_QUERY = "UPDATE applications SET start=?, end=?, status=? WHERE idApplication=?;";
 	private final Logger logger = LogManager.getLogger(MySQLDAOApplication.class
@@ -35,18 +37,7 @@ public class MySQLDAOApplication implements IDAOApplication {
 			preparedStatement.setInt(1, ID);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
-				application = new Application();
-				application.setId(resultSet.getInt("idApplication"));
-				application.getUser().setId(resultSet.getInt("idUser"));
-				application.setAbout(resultSet.getString("about"));
-				application.setStatus(Status.valueOf(resultSet
-						.getString("status")));
-				application.setTypeOfWork(TypeOfWork.valueOf(resultSet
-						.getString("typeOfWork")));
-				application.setCreation(resultSet.getTimestamp("creation"));
-				application.setDesirable(resultSet.getTimestamp("desirable"));
-				application.setStart(resultSet.getTimestamp("start"));
-				application.setEnd(resultSet.getTimestamp("end"));
+				application = appFromResult(resultSet);
 			}
 		} catch (SQLException e) {
 			logger.error(e);
@@ -62,18 +53,7 @@ public class MySQLDAOApplication implements IDAOApplication {
 			preparedStatement.setInt(1, userID);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
-				Application application = new Application();
-				application.setId(resultSet.getInt("idApplication"));
-				application.getUser().setId(resultSet.getInt("idUser"));
-				application.setAbout(resultSet.getString("about"));
-				application.setStatus(Status.valueOf(resultSet
-						.getString("status")));
-				application.setTypeOfWork(TypeOfWork.valueOf(resultSet
-						.getString("typeOfWork")));
-				application.setCreation(resultSet.getTimestamp("creation"));
-				application.setDesirable(resultSet.getTimestamp("desirable"));
-				application.setStart(resultSet.getTimestamp("start"));
-				application.setEnd(resultSet.getTimestamp("end"));
+				Application application = appFromResult(resultSet);
 				list.add(application);
 			}
 		} catch (SQLException e) {
@@ -92,18 +72,26 @@ public class MySQLDAOApplication implements IDAOApplication {
 			preparedStatement.setString(1, status.toString());
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
-				Application application = new Application();
-				application.setId(resultSet.getInt("idApplication"));
-				application.getUser().setId(resultSet.getInt("idUser"));
-				application.setAbout(resultSet.getString("about"));
-				application.setStatus(Status.valueOf(resultSet
-						.getString("status")));
-				application.setTypeOfWork(TypeOfWork.valueOf(resultSet
-						.getString("typeOfWork")));
-				application.setCreation(resultSet.getTimestamp("creation"));
-				application.setDesirable(resultSet.getTimestamp("desirable"));
-				application.setStart(resultSet.getTimestamp("start"));
-				application.setEnd(resultSet.getTimestamp("end"));
+				Application application = appFromResult(resultSet);
+				list.add(application);
+			}
+		} catch (SQLException e) {
+			logger.error(e);
+		}
+		return list;
+	}
+	
+	@Override
+	public List<Application> findByTime(Date start, Date end){
+		List<Application> list = new ArrayList<>();
+		try (Connection conn = ConnectionSource.getInstance().getConnection();) {
+			PreparedStatement preparedStatement = conn
+					.prepareStatement(READ_BY_TIME_QUERY);
+			preparedStatement.setTimestamp(1, new Timestamp(end.getTime()));
+			preparedStatement.setTimestamp(2, new Timestamp(start.getTime()));
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				Application application = appFromResult(resultSet);
 				list.add(application);
 			}
 		} catch (SQLException e) {
@@ -165,4 +153,21 @@ public class MySQLDAOApplication implements IDAOApplication {
 			return false;
 		}
 	}
+
+
+private Application appFromResult(ResultSet resultSet) throws SQLException{
+	Application application = new Application();
+	application.setId(resultSet.getInt("idApplication"));
+	application.getUser().setId(resultSet.getInt("idUser"));
+	application.setAbout(resultSet.getString("about"));
+	application.setStatus(Status.valueOf(resultSet
+			.getString("status")));
+	application.setTypeOfWork(TypeOfWork.valueOf(resultSet
+			.getString("typeOfWork")));
+	application.setCreation(resultSet.getTimestamp("creation"));
+	application.setDesirable(resultSet.getTimestamp("desirable"));
+	application.setStart(resultSet.getTimestamp("start"));
+	application.setEnd(resultSet.getTimestamp("end"));
+	return application;
+}
 }

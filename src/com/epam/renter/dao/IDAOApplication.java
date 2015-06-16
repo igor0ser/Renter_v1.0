@@ -1,5 +1,6 @@
 package com.epam.renter.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.epam.renter.entities.Application;
@@ -12,6 +13,8 @@ public interface IDAOApplication {
 	public List<Application> findByUserID(int userID);
 	
 	public List<Application> findByStatus(Status status);
+	
+	public List<Application> findByTime(Date start, Date end);
 	
 	public boolean create(Application application);
 	

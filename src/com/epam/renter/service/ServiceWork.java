@@ -2,7 +2,9 @@ package com.epam.renter.service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.epam.renter.datasource.DAOFactory;
 import com.epam.renter.entities.Application;
@@ -72,4 +74,31 @@ public class ServiceWork {
 		return workerList;
 	}
 
+	public static List<Worker> getBusyWorkersByTime(Date start, Date end){
+		List<Worker> worker_list = new ArrayList<Worker>();
+		
+		List<Application> app_list = DAOFactory.mySQLFactory.mySQLDAOApplication.findByTime(start, end);
+		for (Application app : app_list){
+			List<Work> work_list = DAOFactory.mySQLFactory.mySQLDAOWork.findByApplication(app);
+			for (Work work : work_list){
+				Worker worker = work.getWorker();
+				int index = worker_list.indexOf(worker);
+				if (index<0){
+					worker_list.add(worker);
+					worker.setApps(new ArrayList<Application>());
+				}
+				else{
+					worker_list.get(index).getApps().add(app);
+				}
+			}
+			
+						
+		}
+		
+		
+		
+		
+		return worker_list;
+	}
+	
 }
