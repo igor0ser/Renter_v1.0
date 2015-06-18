@@ -33,6 +33,7 @@ public class CommandWorkplan implements ICommand {
 	private final Logger logger = LogManager.getLogger(CommandWorkplan.class
 			.getName());
 	private final String DAY = "day";
+	private static final String FORMAT = "yyyy-MM-dd";
 	private Date start;
 	private Date end;
 
@@ -40,26 +41,46 @@ public class CommandWorkplan implements ICommand {
 	public String execute(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String day = (String) session.getAttribute(DAY);
-
-		setDayToToday();
-		List<WorkUnit> workplan= ServiceWork.getWorkplan(start, end);
+		String day = request.getParameter(DAY);
+		System.out.println(day);
+		day = setDates(day);
+		List<WorkUnit> workplan = ServiceWork.getWorkplan(start, end, day);
+		workplan.get(0).setName(day);
+		logger.info("User loaded a workplan");
 		session.setAttribute("workplan", workplan);
-		request.getRequestDispatcher("/WEB-INF/jsp_admin/timeline.jsp")
+		session.setAttribute(DAY, day);
+		request.getRequestDispatcher("/WEB-INF/jsp_admin/workplan.jsp")
 				.forward(request, response);
 		return null;
 	}
 
-	private void setDayToToday() {
-		Calendar c = Calendar.getInstance();
-		c.set(Calendar.HOUR_OF_DAY, 0);
-		c.set(Calendar.MINUTE, 0);
-		c.set(Calendar.SECOND, 0);
-		c.set(Calendar.MILLISECOND, 0);
-		start = c.getTime();
-		System.out.println(start);
-		c.add(Calendar.HOUR_OF_DAY, 24);
-		end = c.getTime();
-		System.out.println(end);
+	private String setDates(String day) {
+		Calendar calendar = Calendar.getInstance();
+		SimpleDateFormat formatter = new SimpleDateFormat(FORMAT);
+		String result = null;
+		if (day != null) {
+			try {
+				start = formatter.parse(day);
+				calendar.setTime(start);
+				result = day;
+			} catch (ParseException e) {
+				logger.error(String.format("Date parse error. Day = %s", day)
+						+ e);
+			}
+		} else {
+			calendar.set(Calendar.HOUR_OF_DAY, 0);
+			calendar.set(Calendar.MINUTE, 0);
+			calendar.set(Calendar.SECOND, 0);
+			calendar.set(Calendar.MILLISECOND, 0);
+			start = calendar.getTime();
+			result = formatter.format(start);
+		}
+
+		System.out.println("start = " + start);
+
+		calendar.add(Calendar.HOUR_OF_DAY, 24);
+		end = calendar.getTime();
+		System.out.println("end = " + end);
+		return result;
 	}
 }

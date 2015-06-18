@@ -6,11 +6,13 @@ import java.util.Date;
 // type of data, what will be parsed by JavaScript
 public class WorkUnit {
 	private String name;
+	private String title;
 	private Timestamp start;
 	private Timestamp end;
 
-	public WorkUnit(String workerName, Date startDate, Date endDate) {
-		this.name = workerName;
+	public WorkUnit(String name, String title, Date startDate, Date endDate) {
+		this.name = name;
+		this.title = title;
 		this.start = new Timestamp(startDate.getTime());
 		this.end = new Timestamp(endDate.getTime());
 	}
@@ -21,6 +23,14 @@ public class WorkUnit {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public Timestamp getStart() {

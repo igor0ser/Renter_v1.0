@@ -53,16 +53,4 @@ public class Mailer {
 		transport.close();
 	
 	}
-	public static void main(String[] args) {
-		Mailer m = new Mailer();
-		try {
-			m.sendEmail("igor0ser@gmail.com", "test", "test body");
-			System.out.println("ok");
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			System.out.println("no");
-			e.printStackTrace();
-		}
-		System.out.println("close");
-	}
 }

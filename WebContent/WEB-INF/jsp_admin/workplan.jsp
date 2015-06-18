@@ -12,6 +12,7 @@
 <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
 
 <script type="text/javascript" src="https://www.google.com/jsapi">
+	
 </script>
 <script type="text/javascript">
 	google.load("visualization", "1", {
@@ -27,7 +28,11 @@
 
 		dataTable.addColumn({
 			type : 'string',
-			id : 'Worker'
+			id : 'Name'
+		});
+		dataTable.addColumn({
+			type : 'string',
+			id : 'Title'
 		});
 		dataTable.addColumn({
 			type : 'date',
@@ -39,22 +44,37 @@
 		});
 		<c:forEach var="item" items="${workplan}">
 		var name = "${item.name}";
+		var title = "${item.title}";
 		var date1 = new Date("${item.start}");
 		var date2 = new Date("${item.end}");
 
-		dataTable.addRows([ [ name, date1, date2 ] ]);
+		dataTable.addRows([ [ name, title, date1, date2 ] ]);
 
 		</c:forEach>
-		chart.draw(dataTable);
+
+		var options = {
+			colors : [ '#ADD8E6', '#FFFF00', '#FF6347' ],
+		};
+
+		chart.draw(dataTable, options);
 	}
 </script>
 </head>
 <body>
 
 	<%@include file="title-menu.jsp"%>
-	
+
 	<div class="appplication-container">
-	<h3 align="center"><fmt:message key="Workplan" /></h3>
-	<div id="timeline"></div>
+		<h3 align="center">
+			<fmt:message key="Workplan" />
+		</h3>
+		<form align="center" action="controller" method="post">
+			<input name="day" type="date" value="${day}"> <input
+				type="hidden" name="command" value="workplan" />
+			<button type="submit" style="width: 200px;">
+				<fmt:message key="Show_day" />
+			</button>
+		</form>
+		<div id="timeline"></div>
 	</div>
 </body>
