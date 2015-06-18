@@ -11,10 +11,4 @@
 		<body-content>empty</body-content>
 		<info>This tag shows date and time of 9 AM of tomorrow</info>
 	</tag>
-	<tag>
-		<name>timeline</name>
-		<tag-class>com.epam.renter.tag.TimelineTag</tag-class>
-		<body-content>empty</body-content>
-		<info>This tag shows timeline</info>
-	</tag>
 </taglib>

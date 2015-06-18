@@ -7,15 +7,12 @@
 <head>
 <meta charset="UTF-8">
 <fmt:setLocale value="${language}" />
-<title>Renter - <c:out value="${message}"></c:out></title>
+<title>Renter - <fmt:message key="${message}" /></title>
 <link rel="stylesheet" href="main_admin.css">
 <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
 </head>
 <body>
-	
 	<%@include file="title-menu.jsp"%>
-
-
 
 	<div class="center-container">
 		<div id="message-container">

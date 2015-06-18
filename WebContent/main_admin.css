@@ -139,3 +139,7 @@ button {
 .calendar{
 	width: 100%;
 }
+
+#timeline{
+	height: 525px;
+}

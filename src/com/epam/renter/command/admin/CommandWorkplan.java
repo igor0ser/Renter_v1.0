@@ -25,6 +25,7 @@ import com.epam.renter.entities.Worker;
 import com.epam.renter.properties.Config;
 import com.epam.renter.properties.Message;
 import com.epam.renter.service.ServiceWork;
+import com.epam.renter.service.WorkUnit;
 
 // this command assign workers to application
 public class CommandWorkplan implements ICommand {
@@ -42,14 +43,8 @@ public class CommandWorkplan implements ICommand {
 		String day = (String) session.getAttribute(DAY);
 
 		setDayToToday();
-		List<Worker> workers = ServiceWork.getWorkers(start, end);
-
-		session.setAttribute("day_worker_list", workers);
-		Timestamp ts = new Timestamp(start.getTime());
-		long x = start.getTime();
-		session.setAttribute("mytime", ts);
-		System.out.println(ts);
-		request.setAttribute("name", "Jack");
+		List<WorkUnit> workplan= ServiceWork.getWorkplan(start, end);
+		session.setAttribute("workplan", workplan);
 		request.getRequestDispatcher("/WEB-INF/jsp_admin/timeline.jsp")
 				.forward(request, response);
 		return null;

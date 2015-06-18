@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Worker implements Serializable {
+public class Worker implements Serializable, Comparable<Worker> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -86,6 +86,14 @@ public class Worker implements Serializable {
 	@Override
 	public String toString() {
 		return name + " " + surname;
+	}
+
+	@Override
+	public int compareTo(Worker worker) {
+		Worker other=(Worker) worker;
+		if (typeOfWork.ordinal()>other.typeOfWork.ordinal()) return 1;
+		else if(typeOfWork.ordinal()<other.typeOfWork.ordinal()) return -1;
+		else return name.compareTo(other.name);
 	}
 
 

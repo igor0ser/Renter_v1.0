@@ -1,6 +1,8 @@
 package com.epam.renter.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -9,9 +11,34 @@ import com.epam.renter.entities.Application;
 import com.epam.renter.entities.TypeOfWork;
 import com.epam.renter.entities.Work;
 import com.epam.renter.entities.Worker;
-import com.sun.org.apache.regexp.internal.recompile;
-
+//class is created to join Applications, Worker and Work tables
 public class ServiceWork {
+	//returns data to create Workplan
+	public static List<WorkUnit> getWorkplan(Date start, Date end){
+		List<Worker> allWorkers = DAOFactory.mySQLFactory.mySQLDAOWorker
+				.readAll();
+		List<Worker> busyWorkers = getBusyWorkersByTime(start, end);
+		listMinusList(allWorkers, busyWorkers);
+		allWorkers.addAll(busyWorkers);
+		Collections.sort(allWorkers);
+		List<WorkUnit> workplan = new ArrayList<WorkUnit>();
+		String title = start.toString() + " - " + end.toString();
+		workplan.add(new WorkUnit(title, start, end));
+		for (Worker worker : allWorkers) {
+			String name = worker.toString();
+			if (worker.getApps().size()==0){
+				workplan.add(new WorkUnit(name, end, end));
+			} else{
+				for (Application app : worker.getApps()){
+					workplan.add(new WorkUnit(name, app.getStart(), app.getEnd()));
+				}
+			}
+		}
+		System.out.println(Arrays.toString(workplan.toArray()));
+		return workplan;
+	}
+	
+	
 // list of all workers
 	public static List<Worker> getFreeWorkers(Date start, Date end) {
 		List<Worker> allWorkers = DAOFactory.mySQLFactory.mySQLDAOWorker
@@ -45,16 +72,7 @@ public class ServiceWork {
 		return workerList;
 	}
 
-	public static List<Worker> getWorkers(Date start, Date end){
-		List<Worker> allWorkers = DAOFactory.mySQLFactory.mySQLDAOWorker
-				.readAll();
-		List<Worker> busyWorkers = getBusyWorkersByTime(start, end);
-		listMinusList(allWorkers, busyWorkers);
-		allWorkers.addAll(busyWorkers);
-		return allWorkers;
-	}
-	
-	
+// return list of workers with filled list of applications	
 	private static List<Worker> getBusyWorkersByTime(Date start, Date end){
 		List<Worker> workerList = new ArrayList<Worker>();
 		

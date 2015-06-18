@@ -34,7 +34,7 @@
 		<div id="hello">
 			<b><fmt:message key="Welcome" /><span id="Renter1">RENTER</span>!</b>
 		</div>
-		<b><fmt:message key="R_form" /></b>
+		<b><fmt:message key="R_form" />:</b>
 		<form id="reg-form" onSubmit="return checkPw(this)"
 			action="controller" method="post">
 			<input type="hidden" name="command" value="registration" />

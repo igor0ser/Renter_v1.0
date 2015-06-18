@@ -1,12 +1,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib uri="/WEB-INF/mytag.tld" prefix="mytag"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 
-<html>
+<!doctype html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<fmt:setLocale value="${language}" />
+<title>Renter - <fmt:message key="Workplan" /></title>
+<link rel="stylesheet" href="main_admin.css">
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+
 <script type="text/javascript" src="https://www.google.com/jsapi">
-	
 </script>
 <script type="text/javascript">
 	google.load("visualization", "1", {
@@ -32,11 +37,12 @@
 			type : 'date',
 			id : 'End'
 		});
-		<c:forEach var="item" items="${day_worker_list}">
-		var name = "${item}";
-		var x = <%=new java.sql.Date(111) %>;
-	  	dataTable.addRows([ [ name, new Date(x) ,
-				new Date(2015, 6, 19, 3, 00) ] ]);
+		<c:forEach var="item" items="${workplan}">
+		var name = "${item.name}";
+		var date1 = new Date("${item.start}");
+		var date2 = new Date("${item.end}");
+
+		dataTable.addRows([ [ name, date1, date2 ] ]);
 
 		</c:forEach>
 		chart.draw(dataTable);
@@ -44,6 +50,11 @@
 </script>
 </head>
 <body>
-	<div id="timeline" style="width: 900px; height: 180px;"></div>
-	</body>
-</html>
+
+	<%@include file="title-menu.jsp"%>
+	
+	<div class="appplication-container">
+	<h3 align="center"><fmt:message key="Workplan" /></h3>
+	<div id="timeline"></div>
+	</div>
+</body>
