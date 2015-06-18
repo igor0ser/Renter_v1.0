@@ -15,7 +15,7 @@
 	
 </script>
 <script type="text/javascript">
-	google.load("visualization", "1", {
+	google.load("visualization", "1.1", {
 		packages : [ "timeline" ]
 	});
 	google.setOnLoadCallback(drawChart);
@@ -24,7 +24,6 @@
 		var container = document.getElementById('timeline');
 		var chart = new google.visualization.Timeline(container);
 		var dataTable = new google.visualization.DataTable();
-		var name = "${requestScope.name}";
 
 		dataTable.addColumn({
 			type : 'string',
@@ -35,6 +34,10 @@
 			id : 'Title'
 		});
 		dataTable.addColumn({
+			type : 'string',
+			role : 'tooltip'
+		});
+		dataTable.addColumn({
 			type : 'date',
 			id : 'Start'
 		});
@@ -42,18 +45,20 @@
 			type : 'date',
 			id : 'End'
 		});
+
 		<c:forEach var="item" items="${workplan}">
 		var name = "${item.name}";
 		var title = "${item.title}";
+		var tooltip = "${item.about}"; 
 		var date1 = new Date("${item.start}");
 		var date2 = new Date("${item.end}");
 
-		dataTable.addRows([ [ name, title, date1, date2 ] ]);
+		dataTable.addRows([ [ name, title, tooltip, date1, date2 ] ]);
 
 		</c:forEach>
 
 		var options = {
-			colors : [ '#ADD8E6', '#FFFF00', '#FF6347' ],
+
 		};
 
 		chart.draw(dataTable, options);

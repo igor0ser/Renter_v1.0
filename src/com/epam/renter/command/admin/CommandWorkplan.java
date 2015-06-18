@@ -60,25 +60,24 @@ public class CommandWorkplan implements ICommand {
 		String result = null;
 		if (day != null) {
 			try {
-				start = formatter.parse(day);
-				calendar.setTime(start);
-				result = day;
+				Date d = formatter.parse(day);
+				calendar.setTime(d);
 			} catch (ParseException e) {
 				logger.error(String.format("Date parse error. Day = %s", day)
 						+ e);
 			}
-		} else {
-			calendar.set(Calendar.HOUR_OF_DAY, 0);
-			calendar.set(Calendar.MINUTE, 0);
-			calendar.set(Calendar.SECOND, 0);
-			calendar.set(Calendar.MILLISECOND, 0);
-			start = calendar.getTime();
-			result = formatter.format(start);
 		}
+
+		calendar.set(Calendar.HOUR_OF_DAY, 8);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		start = calendar.getTime();
+		result = formatter.format(start);
 
 		System.out.println("start = " + start);
 
-		calendar.add(Calendar.HOUR_OF_DAY, 24);
+		calendar.add(Calendar.HOUR_OF_DAY, 12);
 		end = calendar.getTime();
 		System.out.println("end = " + end);
 		return result;

@@ -7,12 +7,15 @@ import java.util.Date;
 public class WorkUnit {
 	private String name;
 	private String title;
+	private String about;
+
 	private Timestamp start;
 	private Timestamp end;
 
-	public WorkUnit(String name, String title, Date startDate, Date endDate) {
+	public WorkUnit(String name, String title, String about, Date startDate, Date endDate) {
 		this.name = name;
 		this.title = title;
+		this.about = about;
 		this.start = new Timestamp(startDate.getTime());
 		this.end = new Timestamp(endDate.getTime());
 	}
@@ -31,6 +34,14 @@ public class WorkUnit {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getAbout() {
+		return about;
+	}
+
+	public void setAbout(String about) {
+		this.about = about;
 	}
 
 	public Timestamp getStart() {

@@ -25,18 +25,19 @@ public class ServiceWork {
 		Collections.sort(allWorkers);
 		List<WorkUnit> workplan = new ArrayList<WorkUnit>();
 		// title of work plan
-		workplan.add(new WorkUnit("", title, start, end));
+		workplan.add(new WorkUnit(title, "", "", start, end));
 		for (Worker worker : allWorkers) {
-			String name = worker.toString();
+			String name = worker.toString() + " ("
+					+ worker.getTypeOfWork().toString().toLowerCase() + ")";
 			if (worker.getApps().size() == 0) {
 				// if worker is free all day
-				workplan.add(new WorkUnit(name, "", end, end));
+				workplan.add(new WorkUnit(name, "", "", end, end));
 			} else {
 				for (Application app : worker.getApps()) {
 					Address address = DAOFactory.mySQLFactory.mySQLDAOAddress
 							.findByUser(app.getUser());
 					workplan.add(new WorkUnit(name, address.toString(), app
-							.getStart(), app.getEnd()));
+							.getAbout(), app.getStart(), app.getEnd()));
 				}
 			}
 		}
