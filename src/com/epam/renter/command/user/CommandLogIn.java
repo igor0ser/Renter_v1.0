@@ -1,7 +1,6 @@
 package com.epam.renter.command.user;
 
 import java.io.IOException;
-import java.util.Locale;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

@@ -1,7 +1,6 @@
 package com.epam.renter.command.admin;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -17,13 +16,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.epam.renter.controller.ICommand;
-import com.epam.renter.datasource.DAOFactory;
-import com.epam.renter.entities.Application;
-import com.epam.renter.entities.Status;
-import com.epam.renter.entities.Work;
-import com.epam.renter.entities.Worker;
-import com.epam.renter.properties.Config;
-import com.epam.renter.properties.Message;
 import com.epam.renter.service.ServiceWork;
 import com.epam.renter.service.WorkUnit;
 

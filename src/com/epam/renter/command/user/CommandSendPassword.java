@@ -1,24 +1,20 @@
 package com.epam.renter.command.user;
 
 import java.io.IOException;
-import java.util.Locale;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.epam.renter.controller.ICommand;
 import com.epam.renter.datasource.DAOFactory;
-import com.epam.renter.entities.Admin;
 import com.epam.renter.entities.User;
 import com.epam.renter.mail.Mailer;
 import com.epam.renter.properties.Config;
-import com.epam.renter.properties.Message;
 
 public class CommandSendPassword implements ICommand {
 

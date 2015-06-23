@@ -7,6 +7,7 @@ body {
 @font-face {
 	font-family: Tetra;
 	src: url(fonts/tetra.ttf);
+
 }
 
 .title-container {
@@ -101,9 +102,26 @@ button {
 
 .app-table {
 	border-spacing: 0px;
-	border: 1px solid black;
+	border: 1px solid #c0c9c6;
 	padding: 2px;
 	background-color: white;
+	font-family: Arial;
+	font-size: 85%;
+	color: #4a4849;
+	line-height: 25px;
+}
+
+.app-table tr:nth-child(2n) {
+	background-color: #e4e4e4;
+	border-color: white;
+	border-left-color: #c0c9c6;
+	
+}
+.app-table tr td:last-child{
+	border-right-color: #c0c9c6;
+}
+.app-table button{
+	font-weight: bold;
 }
 
 .about {
@@ -136,10 +154,10 @@ button {
 	text-align: center;
 }
 
-.calendar{
+.calendar {
 	width: 100%;
 }
 
-#timeline{
+#timeline {
 	height: 525px;
 }
