@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <fmt:setLocale value="${language}" />
 <title>Renter - <fmt:message key="Assigned_apps" /></title>
-<link rel="stylesheet" href="main_admin.css">
+<link rel="stylesheet" href="main-adm.css">
 <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
 </head>
 <body>

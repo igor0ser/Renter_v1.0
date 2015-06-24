@@ -88,7 +88,7 @@ button {
 }
 
 .appplication-container {
-	padding: 10px;
+	padding: 40px;
 	background: #E0EEEE;
 	border: 5px solid #F8F8FF;
 	width: 1200px;
@@ -136,6 +136,15 @@ button {
 .app-table th {
 	width: 100px;
 	padding: 5px;
+}
+
+caption, h3{
+	font: 18pt 'PT Sans', Tahoma, Arial;
+	color: black;
+	font-weight: bold;
+	line-height: 55px;
+	margin: 0;
+	border-color: white;
 }
 
 #app-form input {

@@ -16,6 +16,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.epam.renter.controller.ICommand;
+import com.epam.renter.properties.Config;
 import com.epam.renter.service.ServiceWork;
 import com.epam.renter.service.WorkUnit;
 
@@ -26,6 +27,7 @@ public class CommandWorkplan implements ICommand {
 			.getName());
 	private final String DAY = "day";
 	private static final String FORMAT = "yyyy-MM-dd";
+	private final static String LAST_PAGE = "last_page";
 	private Date start;
 	private Date end;
 
@@ -41,8 +43,9 @@ public class CommandWorkplan implements ICommand {
 		logger.info("User loaded a workplan");
 		session.setAttribute("workplan", workplan);
 		session.setAttribute(DAY, day);
-		request.getRequestDispatcher("/WEB-INF/jsp_admin/workplan.jsp")
-				.forward(request, response);
+		session.setAttribute(LAST_PAGE,
+				Config.getInstance().getProperty(Config.ADMIN_WORKPLAN));
+		request.getRequestDispatcher(Config.getInstance().getProperty(Config.ADMIN_WORKPLAN)).forward(request, response);
 		return null;
 	}
 

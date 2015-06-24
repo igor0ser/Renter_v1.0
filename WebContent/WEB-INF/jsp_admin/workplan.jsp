@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <fmt:setLocale value="${language}" />
 <title>Renter - <fmt:message key="Workplan" /></title>
-<link rel="stylesheet" href="main_admin.css">
+<link rel="stylesheet" href="main-adm.css">
 <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
 
 <script type="text/javascript" src="https://www.google.com/jsapi">
@@ -52,7 +52,8 @@
 		var tooltip = "${item.about}"; 
 		var date1 = new Date("${item.start}");
 		var date2 = new Date("${item.end}");
-
+		
+		
 		dataTable.addRows([ [ name, title, tooltip, date1, date2 ] ]);
 
 		</c:forEach>
@@ -74,6 +75,7 @@
 			<fmt:message key="Workplan" />
 		</h3>
 		<form align="center" action="controller" method="post">
+	
 			<input name="day" type="date" value="${day}"> <input
 				type="hidden" name="command" value="workplan" />
 			<button type="submit" style="width: 200px;">

@@ -20,7 +20,7 @@ public class Config {
     public static final String ADMIN_HANDLE_APP = "ADMIN_HANDLE_APP";
     public static final String ADMIN_FREE_WORKERS = "ADMIN_FREE_WORKERS";
     public static final String GO_TO_CREATE_APP = "GO_TO_CREATE_APP";
-
+    public static final String ADMIN_WORKPLAN = "ADMIN_WORKPLAN";
     public static Config getInstance() {
         if (instance == null) {
             instance = new Config();
