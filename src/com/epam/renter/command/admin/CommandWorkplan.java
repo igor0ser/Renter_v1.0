@@ -36,10 +36,9 @@ public class CommandWorkplan implements ICommand {
 			HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		String day = request.getParameter(DAY);
-		System.out.println(day);
+		
 		day = setDates(day);
 		List<WorkUnit> workplan = ServiceWork.getWorkplan(start, end, day);
-		workplan.get(0).setName(day);
 		logger.info("User loaded a workplan");
 		session.setAttribute("workplan", workplan);
 		session.setAttribute(DAY, day);
