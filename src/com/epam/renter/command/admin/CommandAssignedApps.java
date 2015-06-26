@@ -35,13 +35,11 @@ public class CommandAssignedApps implements ICommand {
 			HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		// list of assigned applications from db
-		List<Application> list = DAOFactory.mySQLFactory.mySQLDAOApplication
-				.findByStatus(Status.ASSIGNED);
+		List<Application> list = DAOFactory.getDAOApplication().findByStatus(
+				Status.ASSIGNED);
 		for (Application app : list) {
-			User user = DAOFactory.mySQLFactory.mySQLDAOUser.findByID(app
-					.getUser().getId());
-			Address address = DAOFactory.mySQLFactory.mySQLDAOAddress
-					.findByUser(user);
+			User user = DAOFactory.getDAOUser().findByID(app.getUser().getId());
+			Address address = DAOFactory.getDAOAddress().findByUser(user);
 			user.setAddress(address);
 			app.setUser(user);
 			// list of workers to each application

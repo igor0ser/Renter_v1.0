@@ -19,6 +19,7 @@ import com.epam.renter.entities.Address;
 import com.epam.renter.entities.Application;
 import com.epam.renter.entities.User;
 import com.epam.renter.properties.Config;
+
 // this command allows admin handle one application
 public class CommandHandleApp implements ICommand {
 
@@ -35,20 +36,18 @@ public class CommandHandleApp implements ICommand {
 	public String execute(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		
+
 		SimpleDateFormat formatter = new SimpleDateFormat(FORMAT);
 		String app_id = request.getParameter(APP_ID);
 		int id = Integer.parseInt(app_id);
-		Application app = DAOFactory.mySQLFactory.mySQLDAOApplication
-				.findByID(id);
-		User user = DAOFactory.mySQLFactory.mySQLDAOUser.findByID(app.getUser()
-				.getId());
-		Address address = DAOFactory.mySQLFactory.mySQLDAOAddress
-				.findByUser(user);
+		Application app = DAOFactory.getDAOApplication().findByID(id);
+		User user = DAOFactory.getDAOUser().findByID(app.getUser().getId());
+		Address address = DAOFactory.getDAOAddress().findByUser(user);
 		user.setAddress(address);
 		app.setUser(user);
 
-		//default start equals to desirable time, default end equals to desirable time + 2 hours
+		// default start equals to desirable time, default end equals to
+		// desirable time + 2 hours
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(app.getDesirable());
 		cal.add(Calendar.HOUR, 2);

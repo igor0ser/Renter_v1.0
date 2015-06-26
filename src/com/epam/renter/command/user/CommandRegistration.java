@@ -59,7 +59,7 @@ public class CommandRegistration implements ICommand {
 			return null;
 		}
 
-		if (DAOFactory.mySQLFactory.mySQLDAOUser.findByLogin(login) != null) {
+		if (DAOFactory.getDAOUser().findByLogin(login) != null) {
 			// if this Login is already in use:
 			logger.info(String.format("Login is already in use. Login = %s ",
 					login));
@@ -87,13 +87,13 @@ public class CommandRegistration implements ICommand {
 		String appartmentNumber = request.getParameter(APPARTMENT);
 
 		User user = new User(login, password, name, surname, email, phoneNumber);
-		if (DAOFactory.mySQLFactory.mySQLDAOUser.create(user)) {
+		if (DAOFactory.getDAOUser().create(user)) {
 			// new User is created
-			user = DAOFactory.mySQLFactory.mySQLDAOUser.findByLogin(login);
+			user = DAOFactory.getDAOUser().findByLogin(login);
 			Address address = new Address(street, houseNumber,
 					appartmentNumber, user);
 			//creating address of this user and loading it in DB
-			if (DAOFactory.mySQLFactory.mySQLDAOAddress.create(address)){
+			if (DAOFactory.getDAOAddress().create(address)){
 				logger.error(String.format("Error in creating new address in DB"));
 			};
 			session.setAttribute(LOGIN, login);

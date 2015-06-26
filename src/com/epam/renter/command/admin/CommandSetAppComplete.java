@@ -36,15 +36,13 @@ public class CommandSetAppComplete implements ICommand {
 		// loading an application from DB
 		String id = request.getParameter(APP_ID);
 		int appId = Integer.parseInt(id);
-		Application app = DAOFactory.mySQLFactory.mySQLDAOApplication
-				.findByID(appId);
+		Application app = DAOFactory.getDAOApplication().findByID(appId);
 		// changing it's status
 		app.setStatus(Status.COMPLETED);
 		// changing it in DB
-		boolean flag = DAOFactory.mySQLFactory.mySQLDAOApplication.update(app);
+		boolean flag = DAOFactory.getDAOApplication().update(app);
 		if (!flag) {
-			session.setAttribute(ADMIN_MESSAGE,
-					Message.ADMIN_ERROR);
+			session.setAttribute(ADMIN_MESSAGE, Message.ADMIN_ERROR);
 			logger.error(String.format(
 					"Application wasn't saved to DB. Application = %s ", app));
 

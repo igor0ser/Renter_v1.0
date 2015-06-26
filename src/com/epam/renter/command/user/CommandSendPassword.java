@@ -31,7 +31,7 @@ public class CommandSendPassword implements ICommand {
 	public String execute(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter(EMAIL);
-		User user = DAOFactory.mySQLFactory.mySQLDAOUser.findByEmail(email);
+		User user = DAOFactory.getDAOUser().findByEmail(email);
 
 		if (user == null) {
 			forvardMessage(request, response, WRONG_EMAIL, Config.getInstance()

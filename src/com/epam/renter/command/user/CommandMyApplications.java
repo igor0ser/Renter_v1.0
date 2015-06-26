@@ -22,25 +22,29 @@ public class CommandMyApplications implements ICommand {
 	private static final String LIST = "list";
 	private static final String LIST_SIZE = "list_size";
 	private final static String LAST_PAGE = "last_page";
-	private final Logger logger = LogManager.getLogger(CommandMyApplications.class.getName());
+	private final Logger logger = LogManager
+			.getLogger(CommandMyApplications.class.getName());
 
 	@Override
 	public String execute(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		int userID = (int) session.getAttribute(USER_ID);
-		
-		//getting list of application that created by this user
-		List<Application> list = DAOFactory.mySQLFactory.mySQLDAOApplication
-				.findByUserID(userID);
+
+		// getting list of application that created by this user
+		List<Application> list = DAOFactory.getDAOApplication().findByUserID(
+				userID);
 
 		session.setAttribute(LIST, list);
 		session.setAttribute(LIST_SIZE, list.size());
-		logger.info(String.format("User (id = %d) watches his applications. He has %d applications", userID, list.size()));
+		logger.info(String
+				.format("User (id = %d) watches his applications. He has %d applications",
+						userID, list.size()));
 		session.setAttribute(LAST_PAGE,
 				Config.getInstance().getProperty(Config.MY_APPS));
-		request.getRequestDispatcher(Config.getInstance().getProperty(Config.MY_APPS)).forward(request,
-				response);
+		request.getRequestDispatcher(
+				Config.getInstance().getProperty(Config.MY_APPS)).forward(
+				request, response);
 
 		return null;
 	}

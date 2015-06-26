@@ -58,9 +58,9 @@ public class CommandCreateApp implements ICommand {
 		Application application = new Application(user, about, typeOfWork,
 				desirable);
 
-		// trying to add new Application to DB. flag returns true if all is OK with it
-		boolean flag = DAOFactory.mySQLFactory.mySQLDAOApplication
-				.create(application);
+		// trying to add new Application to DB. flag returns true if all is OK
+		// with it
+		boolean flag = DAOFactory.getDAOApplication().create(application);
 
 		if (flag) {
 			logger.info(String.format("Application is loaded in DB. App = %s",

@@ -74,7 +74,7 @@ public class CommandAddWorkers implements ICommand {
 				// saving worker in this application work
 				System.out.println("записываем - "
 						+ request.getParameter(String.valueOf(worker.getId())));
-				boolean saved = DAOFactory.mySQLFactory.mySQLDAOWork
+				boolean saved = DAOFactory.getDAOWork()
 						.create(new Work(app, worker));
 				quantity++;
 				// if errors in saving - logging it
@@ -96,8 +96,7 @@ public class CommandAddWorkers implements ICommand {
 		app.setEnd(end);
 		app.setStatus(Status.ASSIGNED);
 		// changing application to assigned in DB
-		boolean isAppSaved = DAOFactory.mySQLFactory.mySQLDAOApplication
-				.update(app);
+		boolean isAppSaved = DAOFactory.getDAOApplication().update(app);
 
 		// if error - show message about error
 
