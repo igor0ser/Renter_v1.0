@@ -43,15 +43,15 @@
 						<td>${app.user.phoneNumber}</td>
 						<td>${app.user.address}</td>
 						<td>${app.typeOfWork}</td>
-						<td class="about">${app.about}</td>
-						<td class="time"><fmt:formatDate type="both"
+						<td>${app.about}</td>
+						<td><fmt:formatDate type="both"
 								timeStyle="short" value="${app.creation}" /></td>
-						<td class="time"><fmt:formatDate type="both"
+						<td><fmt:formatDate type="both"
 								timeStyle="short" value="${app.desirable}" /></td>
-						<td class="calendar" class="reg-input"><input name="start"
+						<td class="reg-input"><input name="start"
 							type="datetime-local"
 							value=<c:out value="${default_start}"></c:out> required>
-						<td class="calendar" class="reg-input"><input name="end"
+						<td class="reg-input"><input name="end"
 							type="datetime-local" required value="${default_end}"></td>
 
 

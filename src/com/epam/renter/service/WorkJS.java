@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 // type of data, what will be parsed by JavaScript
-public class WorkUnit {
+public class WorkJS {
 	private String name;
 	private String title;
 	private String about;
@@ -12,7 +12,7 @@ public class WorkUnit {
 	private Timestamp start;
 	private Timestamp end;
 
-	public WorkUnit(String name, String title, String about, Date startDate, Date endDate) {
+	public WorkJS(String name, String title, String about, Date startDate, Date endDate) {
 		this.name = name;
 		this.title = title;
 		this.about = about;

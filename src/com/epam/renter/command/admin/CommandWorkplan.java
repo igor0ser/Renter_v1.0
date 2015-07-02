@@ -18,7 +18,7 @@ import org.apache.logging.log4j.Logger;
 import com.epam.renter.controller.ICommand;
 import com.epam.renter.properties.Config;
 import com.epam.renter.service.ServiceWork;
-import com.epam.renter.service.WorkUnit;
+import com.epam.renter.service.WorkJS;
 
 // this command assign workers to application
 public class CommandWorkplan implements ICommand {
@@ -38,7 +38,7 @@ public class CommandWorkplan implements ICommand {
 		String day = request.getParameter(DAY);
 		
 		day = setDates(day);
-		List<WorkUnit> workplan = ServiceWork.getWorkplan(start, end, day);
+		List<WorkJS> workplan = ServiceWork.getWorkplan(start, end, day);
 		logger.info("User loaded a workplan");
 		session.setAttribute("workplan", workplan);
 		session.setAttribute(DAY, day);

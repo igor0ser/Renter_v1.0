@@ -15,26 +15,26 @@ import com.epam.renter.entities.Worker;
 //class is created to join Applications, Worker and Work tables
 public class ServiceWork {
 	// returns data to create Workplan
-	public static List<WorkUnit> getWorkplan(Date start, Date end, String title) {
+	public static List<WorkJS> getWorkplan(Date start, Date end, String title) {
 		List<Worker> allWorkers = DAOFactory.getDAOWorker().readAll();
 		List<Worker> busyWorkers = getBusyWorkersByTime(start, end);
 		listMinusList(allWorkers, busyWorkers);
 		allWorkers.addAll(busyWorkers);
 		Collections.sort(allWorkers);
-		List<WorkUnit> workplan = new ArrayList<WorkUnit>();
+		List<WorkJS> workplan = new ArrayList<WorkJS>();
 		// title of work plan
-		workplan.add(new WorkUnit(title, "", "", start, end));
+		workplan.add(new WorkJS(title, "", "", start, end));
 		for (Worker worker : allWorkers) {
 			String name = worker.toString() + " ("
 					+ worker.getTypeOfWork().toString().toLowerCase() + ")";
 			if (worker.getApps().size() == 0) {
 				// if worker is free all day
-				workplan.add(new WorkUnit(name, "", "", end, end));
+				workplan.add(new WorkJS(name, "", "", end, end));
 			} else {
 				for (Application app : worker.getApps()) {
 					Address address = DAOFactory.getDAOAddress().findByUser(
 							app.getUser());
-					workplan.add(new WorkUnit(name, address.toString(), app
+					workplan.add(new WorkJS(name, address.toString(), app
 							.getAbout(), app.getStart(), app.getEnd()));
 				}
 			}

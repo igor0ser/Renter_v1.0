@@ -25,7 +25,7 @@ public class ControllerHelper {
 	private static final String COMMAND = "command";
 
 	private static ControllerHelper instance = null;
-	HashMap<String, ICommand> commands = new HashMap<String, ICommand>();
+	private HashMap<String, ICommand> commands = new HashMap<String, ICommand>();
 
 	private ControllerHelper() {
 		commands.put("login", new CommandLogIn());
