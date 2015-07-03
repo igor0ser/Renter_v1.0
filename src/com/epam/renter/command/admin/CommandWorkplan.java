@@ -28,30 +28,36 @@ public class CommandWorkplan implements ICommand {
 	private final String DAY = "day";
 	private static final String FORMAT = "yyyy-MM-dd";
 	private final static String LAST_PAGE = "last_page";
-	private Date start;
-	private Date end;
+	 
 
 	@Override
 	public String execute(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		SimpleDateFormat formatter = new SimpleDateFormat(FORMAT);
 		HttpSession session = request.getSession();
 		String day = request.getParameter(DAY);
 		
-		day = setDates(day);
-		List<WorkJS> workplan = ServiceWork.getWorkplan(start, end, day);
+		Calendar calendar = setStart(day);
+		
+		Date start = calendar.getTime();
+		calendar.add(Calendar.HOUR_OF_DAY, 12);
+		Date end = calendar.getTime();
+		
+		String newDay = formatter.format(start);
+		
+		List<WorkJS> workplan = ServiceWork.getWorkplan(start, end, newDay);
 		logger.info("User loaded a workplan");
 		session.setAttribute("workplan", workplan);
-		session.setAttribute(DAY, day);
+		session.setAttribute(DAY, newDay);
 		session.setAttribute(LAST_PAGE,
 				Config.getInstance().getProperty(Config.ADMIN_WORKPLAN));
 		request.getRequestDispatcher(Config.getInstance().getProperty(Config.ADMIN_WORKPLAN)).forward(request, response);
 		return null;
 	}
 
-	private String setDates(String day) {
+	private Calendar setStart(String day) {
 		Calendar calendar = Calendar.getInstance();
 		SimpleDateFormat formatter = new SimpleDateFormat(FORMAT);
-		String result = null;
 		if (day != null) {
 			try {
 				Date d = formatter.parse(day);
@@ -66,14 +72,7 @@ public class CommandWorkplan implements ICommand {
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
 		calendar.set(Calendar.MILLISECOND, 0);
-		start = calendar.getTime();
-		result = formatter.format(start);
-
-		System.out.println("start = " + start);
-
-		calendar.add(Calendar.HOUR_OF_DAY, 12);
-		end = calendar.getTime();
-		System.out.println("end = " + end);
-		return result;
+		return calendar;
+		
 	}
 }
